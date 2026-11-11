@@ -264,6 +264,7 @@
   <div class="success-sub" id="okSub">Tu rendición fue registrada correctamente.<br>El encargado ya puede verla.</div>
   <div class="success-detail" id="successDetail"></div>
   <button class="btn-nueva" id="btnRetry" style="display:none;margin-bottom:12px" onclick="retryNow()">Reintentar envío</button>
+  <button class="btn-nueva" id="btnDiscard" style="display:none;margin-bottom:12px" onclick="descartarPendiente()">Descartar esta rendición</button>
   <button class="btn-nueva" onclick="resetForm()">Nueva rendición</button>
 </div>
 
@@ -471,7 +472,7 @@ function nextSection(){
   if(currentSection===0&&!document.getElementById('vendedor').value){alert('Por favor seleccioná tu nombre.');return}
   // guardar datos de items antes de cambiar de sección
   ['cheques','echeqs','transferencias','depositos'].forEach(t=>saveItemData(t));
-  if(currentSection===SECTIONS.length-1){submitForm();return}
+  if(currentSection===SECTIONS.length-1){const err=validarCaja();if(err){alert(err.msg);currentSection=err.sec;updateUI();scheduleDraft();window.scrollTo({top:0,behavior:'smooth'});return}submitForm();return}
   if(currentSection===SECTIONS.length-2)calcResumen();
   currentSection++;updateUI();scheduleDraft();window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -626,9 +627,11 @@ async function retryNow(){
   updatePendBanner();
 }
 function updatePendBanner(){
-  const n=pendCount(),b=document.getElementById('bannerPend');
-  b.classList.toggle('show',n>0);
-  b.innerHTML=n?`<span>⚠️ Tenés ${n} rendición(es) guardada(s) sin enviar.</span><button onclick="retryNow()">Reintentar</button>`:'';
+  const q=lsGet(PENDING_KEY)||[],b=document.getElementById('bannerPend');
+  b.classList.toggle('show',q.length>0);
+  if(!q.length){b.innerHTML='';return}
+  const p=q[0];
+  b.innerHTML=`<span>⚠️ ${q.length} rendición(es) sin enviar. La primera: ${p.vendedor} · ${p.fecha} · ${fmt(p.totalCaja||0)}</span><span style="display:flex;gap:8px"><button onclick="retryNow()">Reintentar</button><button onclick="descartarPendiente()">Descartar</button></span>`;
 }
 function setStatus(s){
   const m={sending:['⏳','Enviando…','No cierres la página hasta que termine.'],
@@ -639,6 +642,7 @@ function setStatus(s){
   document.getElementById('okTitle').textContent=m[1];
   document.getElementById('okSub').innerHTML=m[2];
   document.getElementById('btnRetry').style.display=s==='pending'?'block':'none';
+  document.getElementById('btnDiscard').style.display=s==='pending'?'block':'none';
 }
 
 const THEME_COLORS={dark:'#1a1d27',light:'#ffffff',contrast:'#000000'};
@@ -653,6 +657,30 @@ function setTheme(t){prefs.theme=t;lsSet(PREFS_KEY,prefs);applyPrefs()}
 function chgSize(d){prefs.size=Math.max(0,Math.min(SIZES.length-1,prefs.size+d));lsSet(PREFS_KEY,prefs);applyPrefs()}
 function toggleCfg(){document.getElementById('cfgPanel').classList.toggle('open')}
 document.addEventListener('click',()=>document.getElementById('cfgPanel')?.classList.remove('open'));
+
+function descartarPendiente(){
+  const q=lsGet(PENDING_KEY)||[];if(!q.length)return;
+  const p=q[0];
+  if(!confirm(`¿Descartar la rendición de ${p.vendedor} (${p.fecha}) por ${fmt(p.totalCaja||0)}?\n\nNo se va a enviar y se pierde lo cargado.`))return;
+  lsSet(PENDING_KEY,q.slice(1));
+  if(document.getElementById('successScreen').classList.contains('active'))resetForm();
+  updatePendBanner();
+}
+function validarCaja(){
+  if(!document.getElementById('fechaCaja').value)return{sec:0,msg:'Falta la fecha de la caja.'};
+  const NOM={cheques:'Cheque',echeqs:'Echeq',transferencias:'Transferencia',depositos:'Depósito'},SEC={cheques:2,echeqs:3,transferencias:4,depositos:5};
+  for(const t of Object.keys(NOM)){
+    for(let i=0;i<items[t].length;i++){
+      const m=parseFloat(document.getElementById(`${t}_monto_${items[t][i].id}`)?.value)||0;
+      if(m<=0)return{sec:SEC[t],msg:`${NOM[t]} #${i+1} no tiene monto. Cargá el monto o borralo con la ✕.`};
+    }
+  }
+  const te=BILLETES.reduce((a,d)=>a+(parseInt(document.getElementById(`b${d}`)?.value)||0)*d,0);
+  const num=id=>parseFloat(document.getElementById(id)?.value)||0;
+  const total=te+getTot('cheques')+getTot('echeqs')+getTot('transferencias')+getTot('depositos')+num('viaticos')+num('gastos')+num('retiros');
+  if(total<=0)return{sec:1,msg:'La caja está en $0. No se puede enviar una caja vacía.'};
+  return null;
+}
 </script>
 </body>
 </html>
