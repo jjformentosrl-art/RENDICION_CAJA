@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1d27">
+<script>try{var p=JSON.parse(localStorage.getItem("rendicion_prefs_v1"))||{};var r=document.documentElement;r.setAttribute("data-theme",p.theme||"dark");r.style.setProperty("--fs",[.9,1,1.15,1.3,1.5][p.size==null?1:p.size]||1)}catch(e){}</script>
 <title>Rendición de Caja</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -14,38 +16,38 @@
     --card-shadow:0 4px 24px rgba(0,0,0,0.4);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px}
-  .app-header{background:linear-gradient(135deg,#1a1d27,#1e2235);border-bottom:1px solid var(--border);padding:16px 20px 14px;position:sticky;top:0;z-index:100}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:calc(110px + (var(--fs) - 1)*60px + env(safe-area-inset-bottom,0px))}
+  .app-header{background:var(--header-bg);border-bottom:1px solid var(--border);padding:16px 20px 14px;position:sticky;top:0;z-index:100}
   .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
   .app-logo{display:flex;align-items:center;gap:10px}
-  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
-  .logo-text{font-size:15px;font-weight:700;letter-spacing:-0.3px}
-  .logo-sub{font-size:11px;color:var(--text3)}
-  .header-date{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);background:var(--surface2);padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
+  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:calc(18px*var(--fs))}
+  .logo-text{font-size:calc(15px*var(--fs));font-weight:700;letter-spacing:-0.3px}
+  .logo-sub{font-size:calc(11px*var(--fs));color:var(--text3)}
+  .header-date{font-family:'DM Mono',monospace;font-size:calc(12px*var(--fs));color:var(--text3);background:var(--surface2);padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
   .progress-bar-wrap{padding:12px 20px 0}
   .progress-steps{display:flex;gap:5px;margin-bottom:6px}
   .progress-step{flex:1;height:3px;border-radius:2px;background:var(--surface3);transition:background 0.3s}
   .progress-step.done{background:var(--green)}
   .progress-step.active{background:var(--accent)}
-  .progress-label{font-size:11px;color:var(--text3);text-align:center}
+  .progress-label{font-size:calc(11px*var(--fs));color:var(--text3);text-align:center}
   .section{display:none;padding:20px;animation:slideIn 0.25s ease}
   .section.active{display:block}
   @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  .section-title{font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-0.5px}
-  .section-subtitle{font-size:13px;color:var(--text3);margin-bottom:22px}
+  .section-title{font-size:calc(22px*var(--fs));font-weight:700;margin-bottom:4px;letter-spacing:-0.5px}
+  .section-subtitle{font-size:calc(13px*var(--fs));color:var(--text3);margin-bottom:22px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--card-shadow)}
   .card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-  .card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  .card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:calc(16px*var(--fs));flex-shrink:0}
   .card-icon.blue{background:rgba(79,142,247,0.15)}
   .card-icon.green{background:rgba(34,201,122,0.15)}
   .card-icon.orange{background:rgba(245,158,11,0.15)}
   .card-icon.purple{background:rgba(124,92,252,0.15)}
   .card-icon.teal{background:rgba(20,184,166,0.15)}
-  .card-title{font-size:14px;font-weight:600}
+  .card-title{font-size:calc(14px*var(--fs));font-weight:600}
   .field{margin-bottom:14px}
   .field:last-child{margin-bottom:0}
-  label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
-  input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none}
+  label{display:block;font-size:calc(11px*var(--fs));font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
+  input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:calc(16px*var(--fs));color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none}
   input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.15)}
   input::placeholder,textarea::placeholder{color:var(--text3)}
   select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235c6280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
@@ -53,46 +55,70 @@
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   textarea{resize:none;min-height:80px;line-height:1.5}
   .amount-field{position:relative}
-  .amount-field span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:15px;font-weight:600;pointer-events:none}
+  .amount-field span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:calc(15px*var(--fs));font-weight:600;pointer-events:none}
   .amount-field input{padding-left:30px}
   .billete-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
   .billete-row:last-child{border-bottom:none}
-  .billete-denom{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
+  .billete-denom{font-family:'DM Mono',monospace;font-size:calc(14px*var(--fs));font-weight:500}
   .billete-controls{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-  .billete-btn{width:36px;height:36px;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:300}
+  .billete-btn{width:36px;height:36px;background:none;border:none;color:var(--text2);font-size:calc(20px*var(--fs));cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:300}
   .billete-btn:active{background:var(--surface3)}
-  .billete-input{width:52px!important;text-align:center;background:transparent!important;border:none!important;border-left:1px solid var(--border)!important;border-right:1px solid var(--border)!important;border-radius:0!important;padding:8px 4px!important;font-family:'DM Mono',monospace!important;font-size:14px!important;box-shadow:none!important}
-  .billete-subtotal{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);min-width:80px;text-align:right}
+  .billete-input{width:52px!important;text-align:center;background:transparent!important;border:none!important;border-left:1px solid var(--border)!important;border-right:1px solid var(--border)!important;border-radius:0!important;padding:8px 4px!important;font-family:'DM Mono',monospace!important;font-size:calc(16px*var(--fs))!important;box-shadow:none!important}
+  .billete-subtotal{font-family:'DM Mono',monospace;font-size:calc(12px*var(--fs));color:var(--text3);min-width:80px;text-align:right}
   .efectivo-total{background:linear-gradient(135deg,rgba(34,201,122,0.1),rgba(34,201,122,0.05));border:1px solid rgba(34,201,122,0.3);border-radius:12px;padding:14px 16px;margin-top:12px;display:flex;align-items:center;justify-content:space-between}
-  .efectivo-total-label{font-size:13px;font-weight:600;color:var(--green)}
-  .efectivo-total-amount{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--green)}
+  .efectivo-total-label{font-size:calc(13px*var(--fs));font-weight:600;color:var(--green)}
+  .efectivo-total-amount{font-family:'DM Mono',monospace;font-size:calc(18px*var(--fs));font-weight:500;color:var(--green)}
   .item-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
   .item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .item-number{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px}
-  .remove-btn{width:26px;height:26px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:6px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
-  .info-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);border-radius:20px;padding:6px 12px;font-size:12px;color:var(--accent);margin-bottom:16px}
-  .add-btn{width:100%;padding:12px;background:transparent;border:1.5px dashed var(--border2);border-radius:12px;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;margin-top:10px}
+  .item-number{font-size:calc(11px*var(--fs));font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px}
+  .remove-btn{width:26px;height:26px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:6px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:calc(14px*var(--fs))}
+  .info-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);border-radius:20px;padding:6px 12px;font-size:calc(12px*var(--fs));color:var(--accent);margin-bottom:16px}
+  .add-btn{width:100%;padding:12px;background:transparent;border:1.5px dashed var(--border2);border-radius:12px;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:calc(14px*var(--fs));font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;margin-top:10px}
   .add-btn:active{border-color:var(--accent);color:var(--accent)}
   .resumen-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)}
   .resumen-row:last-child{border-bottom:none}
-  .resumen-label{font-size:13px;color:var(--text2)}
-  .resumen-value{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
+  .resumen-label{font-size:calc(13px*var(--fs));color:var(--text2)}
+  .resumen-value{font-family:'DM Mono',monospace;font-size:calc(14px*var(--fs));font-weight:500}
   .resumen-value.zero{color:var(--text3)}
   .nav-buttons{display:flex;gap:12px;padding:16px 20px;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(to top,var(--bg) 80%,transparent);padding-top:24px;z-index:99}
-  .btn{flex:1;padding:15px;border-radius:14px;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:-0.2px}
+  .btn{flex:1;padding:15px;border-radius:14px;border:none;font-family:'DM Sans',sans-serif;font-size:calc(15px*var(--fs));font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:-0.2px}
   .btn-back{background:var(--surface2);color:var(--text2);border:1px solid var(--border);flex:0.4}
   .btn-next{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;box-shadow:0 4px 16px rgba(79,142,247,0.3)}
   .btn-next:active{transform:scale(0.98)}
   .btn-submit{background:linear-gradient(135deg,var(--green),#16a35e);color:white;box-shadow:0 4px 16px rgba(34,201,122,0.3)}
   .success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:40px 20px;text-align:center}
   .success-screen.active{display:flex}
-  .success-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--green),#16a35e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:24px;box-shadow:0 8px 32px rgba(34,201,122,0.3);animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+  .success-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--green),#16a35e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:calc(36px*var(--fs));margin-bottom:24px;box-shadow:0 8px 32px rgba(34,201,122,0.3);animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)}
   @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-  .success-title{font-size:26px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
-  .success-sub{font-size:15px;color:var(--text3);margin-bottom:32px;line-height:1.5}
+  .success-title{font-size:calc(26px*var(--fs));font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+  .success-sub{font-size:calc(15px*var(--fs));color:var(--text3);margin-bottom:32px;line-height:1.5}
   .success-detail{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;width:100%;max-width:340px;margin-bottom:28px}
-  .btn-nueva{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px 32px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
-  .tag-req{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;background:rgba(239,68,68,0.12);color:#f87171;text-transform:uppercase;letter-spacing:0.5px;margin-left:4px}
+  .btn-nueva{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px 32px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:calc(15px*var(--fs));font-weight:600;cursor:pointer}
+  .tag-req{display:inline-block;font-size:calc(10px*var(--fs));font-weight:600;padding:2px 7px;border-radius:5px;background:rgba(239,68,68,0.12);color:#f87171;text-transform:uppercase;letter-spacing:0.5px;margin-left:4px}
+
+  :root{--header-bg:linear-gradient(135deg,#1a1d27,#1e2235);--fs:1;color-scheme:dark}
+  :root[data-theme="light"]{color-scheme:light;--bg:#f3f5fb;--surface:#fff;--surface2:#eef1f8;--surface3:#dde3f0;--border:#d3d9e8;--border2:#b9c1d8;--accent:#2563eb;--accent2:#6d4aff;--green:#15803d;--orange:#b45309;--red:#dc2626;--text:#161a2b;--text2:#434a68;--text3:#646b8a;--card-shadow:0 2px 12px rgba(20,30,70,.08);--header-bg:#fff}
+  :root[data-theme="contrast"]{--bg:#000;--surface:#0b0b0b;--surface2:#161616;--surface3:#262626;--border:#6b6b6b;--border2:#9a9a9a;--accent:#ffd400;--accent2:#ffb000;--green:#3dff8f;--orange:#ffb000;--red:#ff6b6b;--text:#fff;--text2:#e8e8e8;--text3:#c8c8c8;--card-shadow:none;--header-bg:#000}
+  [data-theme="light"] .tag-req{color:#b91c1c}
+  [data-theme="contrast"] .btn-next,[data-theme="contrast"] .btn-submit{color:#000}
+  .nav-buttons{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .billete-row{flex-wrap:wrap;gap:8px}
+  .billete-btn{width:44px;height:44px}
+  .remove-btn{width:38px;height:38px}
+  .header-right{display:flex;align-items:center;gap:8px}
+  .cfg-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:20px;min-width:44px;min-height:36px;padding:4px 12px;font-family:inherit;font-weight:700;font-size:calc(14px*var(--fs));cursor:pointer}
+  .cfg-panel{display:none;position:absolute;right:12px;top:100%;margin-top:6px;width:min(320px,calc(100vw - 24px));background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:16px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
+  .cfg-panel.open{display:block}
+  .cfg-title{font-size:calc(11px*var(--fs));font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+  .cfg-themes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .cfg-opt{min-height:44px;padding:8px 4px;border-radius:10px;border:2px solid var(--border);background:var(--surface2);color:var(--text);font-family:inherit;font-size:calc(13px*var(--fs));font-weight:600;cursor:pointer}
+  .cfg-opt.sel{border-color:var(--accent)}
+  .cfg-size{display:flex;align-items:center;gap:8px}
+  .cfg-size .cfg-opt{width:60px;flex:none}
+  .cfg-size-val{flex:1;text-align:center;font-weight:700;font-family:'DM Mono',monospace}
+  .banner{display:none;margin:12px 20px 0;padding:12px 14px;border-radius:12px;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.45);font-size:calc(13px*var(--fs));align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .banner.show{display:flex}
+  .banner button{min-height:40px;padding:8px 14px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-family:inherit;font-weight:600;font-size:calc(13px*var(--fs));cursor:pointer}
 </style>
 </head>
 <body>
@@ -103,13 +129,22 @@
       <div class="logo-icon">💼</div>
       <div><div class="logo-text">Rendición de Caja</div><div class="logo-sub">Versión vendedor</div></div>
     </div>
-    <div class="header-date" id="headerDate"></div>
+    <div class="header-right"><div class="header-date" id="headerDate"></div><button class="cfg-btn" onclick="event.stopPropagation();toggleCfg()" aria-label="Color y tamaño de letra">Aa</button></div>
+  </div>
+  <div class="cfg-panel" id="cfgPanel" onclick="event.stopPropagation()">
+    <div class="cfg-title">Color</div>
+    <div class="cfg-themes"><button class="cfg-opt" data-theme-opt="dark" onclick="setTheme('dark')">🌙 Oscuro</button><button class="cfg-opt" data-theme-opt="light" onclick="setTheme('light')">☀️ Claro</button><button class="cfg-opt" data-theme-opt="contrast" onclick="setTheme('contrast')">◐ Contraste</button></div>
+    <div class="cfg-title">Tamaño de letra</div>
+    <div class="cfg-size"><button class="cfg-opt" onclick="chgSize(-1)">A−</button><div class="cfg-size-val" id="sizeVal">100%</div><button class="cfg-opt" onclick="chgSize(1)">A+</button></div>
   </div>
   <div class="progress-bar-wrap">
     <div class="progress-steps" id="progressSteps"></div>
     <div class="progress-label" id="progressLabel"></div>
   </div>
 </div>
+
+<div class="banner" id="bannerDraft"><span>♻️ Recuperamos lo que ya habías cargado.</span><button onclick="discardDraft()">Empezar de nuevo</button></div>
+<div class="banner" id="bannerPend"></div>
 
 <!-- SEC 1 -->
 <div class="section active" id="sec1">
@@ -161,7 +196,7 @@
   <div class="section-subtitle">Ingresá cada cheque físico por separado</div>
   <div class="info-pill">💡 Podés agregar todos los cheques que necesites</div>
   <div id="chequesContainer"></div>
-  <button class="add-btn" onclick="addItem('cheques')"><span style="font-size:18px">+</span> Agregar cheque</button>
+  <button class="add-btn" onclick="addItem('cheques')"><span style="font-size:calc(18px*var(--fs))">+</span> Agregar cheque</button>
 </div>
 
 <!-- SEC 4 -->
@@ -170,7 +205,7 @@
   <div class="section-subtitle">Cheques electrónicos recibidos de clientes</div>
   <div class="info-pill">💡 Podés agregar todos los echeqs que necesites</div>
   <div id="echeqsContainer"></div>
-  <button class="add-btn" onclick="addItem('echeqs')"><span style="font-size:18px">+</span> Agregar cheque electrónico</button>
+  <button class="add-btn" onclick="addItem('echeqs')"><span style="font-size:calc(18px*var(--fs))">+</span> Agregar cheque electrónico</button>
 </div>
 
 <!-- SEC 5 -->
@@ -179,7 +214,7 @@
   <div class="section-subtitle">Transferencias recibidas de clientes</div>
   <div class="info-pill">💡 Podés agregar todas las transferencias que necesites</div>
   <div id="transferenciasContainer"></div>
-  <button class="add-btn" onclick="addItem('transferencias')"><span style="font-size:18px">+</span> Agregar transferencia</button>
+  <button class="add-btn" onclick="addItem('transferencias')"><span style="font-size:calc(18px*var(--fs))">+</span> Agregar transferencia</button>
 </div>
 
 <!-- SEC 6 -->
@@ -188,7 +223,7 @@
   <div class="section-subtitle">Depósitos que hiciste en el banco hoy</div>
   <div class="info-pill">💡 Dejá vacío si no realizaste depósitos hoy</div>
   <div id="depositosContainer"></div>
-  <button class="add-btn" onclick="addItem('depositos')"><span style="font-size:18px">+</span> Agregar depósito</button>
+  <button class="add-btn" onclick="addItem('depositos')"><span style="font-size:calc(18px*var(--fs))">+</span> Agregar depósito</button>
 </div>
 
 <!-- SEC 7 -->
@@ -224,10 +259,11 @@
 
 <!-- SUCCESS -->
 <div class="success-screen" id="successScreen">
-  <div class="success-icon">✓</div>
-  <div class="success-title">¡Caja enviada!</div>
-  <div class="success-sub">Tu rendición fue registrada correctamente.<br>El encargado ya puede verla.</div>
+  <div class="success-icon" id="okIcon">✓</div>
+  <div class="success-title" id="okTitle">¡Caja enviada!</div>
+  <div class="success-sub" id="okSub">Tu rendición fue registrada correctamente.<br>El encargado ya puede verla.</div>
   <div class="success-detail" id="successDetail"></div>
+  <button class="btn-nueva" id="btnRetry" style="display:none;margin-bottom:12px" onclick="retryNow()">Reintentar envío</button>
   <button class="btn-nueva" onclick="resetForm()">Nueva rendición</button>
 </div>
 
@@ -265,10 +301,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="billete-subtotal" id="sub${d}">$ 0</div>
       </div>
     </div>`).join('');
-  updateUI();
+  restoreDraft();applyPrefs();updateUI();updatePendBanner();
+  if(pendCount())retryNow();
 });
 
-function chgB(d,delta){const i=document.getElementById(`b${d}`);i.value=Math.max(0,(parseInt(i.value)||0)+delta);updB(d);calcEfectivo()}
+function chgB(d,delta){const i=document.getElementById(`b${d}`);i.value=Math.max(0,(parseInt(i.value)||0)+delta);updB(d);calcEfectivo();dirty=true;scheduleDraft()}
 function updB(d){const q=parseInt(document.getElementById(`b${d}`).value)||0;document.getElementById(`sub${d}`).textContent=q*d>0?`$ ${(q*d).toLocaleString('es-AR')}`:'$ 0'}
 function calcEfectivo(){const t=BILLETES.reduce((a,d)=>a+(parseInt(document.getElementById(`b${d}`).value)||0)*d,0);document.getElementById('totalEfectivo').textContent=`$ ${t.toLocaleString('es-AR')}`}
 
@@ -298,7 +335,7 @@ function saveItemData(type) {
 function addItem(type){
   saveItemData(type);
   items[type].push({id:Date.now()});
-  renderItems(type);
+  renderItems(type);dirty=true;scheduleDraft();
   // scroll al nuevo item
   setTimeout(()=>{
     const container=document.getElementById(CONTAINERS[type]);
@@ -309,7 +346,7 @@ function addItem(type){
 function removeItem(type,id){
   saveItemData(type);
   items[type]=items[type].filter(i=>i.id!==id);
-  renderItems(type);
+  renderItems(type);dirty=true;scheduleDraft();
 }
 
 function renderItems(type){
@@ -412,8 +449,8 @@ function calcResumen(){
     <div class="resumen-row"><div class="resumen-label">🧾 Gastos</div><div class="resumen-value ${gas===0?'zero':''}">${fmt(gas)}</div></div>
     <div class="resumen-row"><div class="resumen-label">🏢 Retiros dueños</div><div class="resumen-value ${ret===0?'zero':''}">${fmt(ret)}</div></div>
     <div style="margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,rgba(34,201,122,0.12),rgba(34,201,122,0.06));border:1px solid rgba(34,201,122,0.35);border-radius:12px;display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:15px;font-weight:700;color:var(--green)">💼 TOTAL DE CAJA</span>
-      <span style="font-family:'DM Mono',monospace;font-size:24px;font-weight:600;color:var(--green)">${fmt(totalCaja)}</span>
+      <span style="font-size:calc(15px*var(--fs));font-weight:700;color:var(--green)">💼 TOTAL DE CAJA</span>
+      <span style="font-family:'DM Mono',monospace;font-size:calc(24px*var(--fs));font-weight:600;color:var(--green)">${fmt(totalCaja)}</span>
     </div>`;
 }
 
@@ -436,9 +473,9 @@ function nextSection(){
   ['cheques','echeqs','transferencias','depositos'].forEach(t=>saveItemData(t));
   if(currentSection===SECTIONS.length-1){submitForm();return}
   if(currentSection===SECTIONS.length-2)calcResumen();
-  currentSection++;updateUI();window.scrollTo({top:0,behavior:'smooth'});
+  currentSection++;updateUI();scheduleDraft();window.scrollTo({top:0,behavior:'smooth'});
 }
-function prevSection(){if(currentSection>0){currentSection--;updateUI();window.scrollTo({top:0,behavior:'smooth'})}}
+function prevSection(){if(currentSection>0){currentSection--;updateUI();scheduleDraft();window.scrollTo({top:0,behavior:'smooth'})}}
 
 function submitForm(){
   const te=BILLETES.reduce((a,d)=>a+(parseInt(document.getElementById(`b${d}`)?.value)||0)*d,0);
@@ -454,7 +491,7 @@ function submitForm(){
   const retDet=document.getElementById('retiroDetalle').value;
 
   const payload={
-    vendedor:v, fecha:f, localidad:document.getElementById('localidad').value,
+    id:'R'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), vendedor:v, fecha:f, localidad:document.getElementById('localidad').value,
     efectivo:te,
     billetes:BILLETES.reduce((o,d)=>{o[`b${d}`]=parseInt(document.getElementById(`b${d}`).value)||0;return o},{}),
     cheques:items.cheques.map(item=>({
@@ -485,11 +522,8 @@ function submitForm(){
     totalCaja, observaciones:obs, timestamp:new Date().toISOString()
   };
 
-  const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbw1_M8toQocBfp188SyNXm0bHEN6AgezFcYMvjfzjlkhH6zBy_QxkPxfi4Sy-C3iZZWkA/exec';
-  if(APPS_SCRIPT_URL!=='REEMPLAZAR_CON_URL_DEL_APPS_SCRIPT'){
-    fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
-      .catch(e=>console.error('Error enviando a Sheets:',e));
-  }
+  submitted=true;lsDel(DRAFT_KEY);
+  const q=lsGet(PENDING_KEY)||[];q.push(payload);lsSet(PENDING_KEY,q);
 
   document.getElementById('successDetail').innerHTML=`
     <div class="resumen-row"><div class="resumen-label">👤 Vendedor</div><div class="resumen-value">${v}</div></div>
@@ -503,16 +537,18 @@ function submitForm(){
     <div class="resumen-row"><div class="resumen-label">🧾 Gastos</div><div class="resumen-value">${fmt(gas)}</div></div>
     <div class="resumen-row"><div class="resumen-label">🏢 Retiros dueños</div><div class="resumen-value">${fmt(ret)}</div></div>
     <div style="margin-top:12px;padding-top:12px;border-top:2px solid var(--green);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-weight:700;font-size:15px;color:var(--green)">💼 TOTAL DE CAJA</span>
-      <span style="font-family:'DM Mono',monospace;font-size:24px;color:var(--green);font-weight:700">${fmt(totalCaja)}</span>
+      <span style="font-weight:700;font-size:calc(15px*var(--fs));color:var(--green)">💼 TOTAL DE CAJA</span>
+      <span style="font-family:'DM Mono',monospace;font-size:calc(24px*var(--fs));color:var(--green);font-weight:700">${fmt(totalCaja)}</span>
     </div>`;
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('navButtons').style.display='none';
   document.getElementById('successScreen').classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  setStatus('sending');retryNow();
 }
 
 function resetForm(){
+  lsDel(DRAFT_KEY);submitted=false;dirty=false;document.getElementById('bannerDraft').classList.remove('show');
   currentSection=0;items={cheques:[],echeqs:[],transferencias:[],depositos:[]};
   document.getElementById('vendedor').value='';document.getElementById('localidad').value='';
   BILLETES.forEach(d=>{document.getElementById(`b${d}`).value=0;document.getElementById(`sub${d}`).textContent='$ 0'});
@@ -524,6 +560,99 @@ function resetForm(){
   document.getElementById('navButtons').style.display='flex';
   updateUI();window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// ===== Persistencia, envío con reintentos, preferencias =====
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbw1_M8toQocBfp188SyNXm0bHEN6AgezFcYMvjfzjlkhH6zBy_QxkPxfi4Sy-C3iZZWkA/exec';
+const DRAFT_KEY='rendicion_borrador_v1',PENDING_KEY='rendicion_pendientes_v1',PREFS_KEY='rendicion_prefs_v1';
+const SIZES=[0.9,1,1.15,1.3,1.5];
+let dirty=false,submitted=false,draftTimer=null,flushing=null;
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+let prefs=Object.assign({theme:'dark',size:1},lsGet(PREFS_KEY)||{});
+
+function scheduleDraft(){clearTimeout(draftTimer);draftTimer=setTimeout(saveDraft,300)}
+function saveDraft(){
+  if(!dirty||submitted)return;
+  const values={};
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(e=>values[e.id]=e.value);
+  const its={};Object.keys(items).forEach(t=>its[t]=items[t].map(i=>i.id));
+  lsSet(DRAFT_KEY,{v:1,dirty:true,section:currentSection,items:its,values,savedAt:Date.now()});
+}
+function restoreDraft(){
+  const d=lsGet(DRAFT_KEY);
+  if(!d||d.v!==1||!d.dirty)return;
+  Object.keys(CONTAINERS).forEach(t=>{items[t]=((d.items||{})[t]||[]).map(id=>({id}));renderItems(t)});
+  Object.entries(d.values||{}).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val});
+  BILLETES.forEach(updB);calcEfectivo();
+  currentSection=Math.min(d.section||0,SECTIONS.length-1);
+  if(currentSection===SECTIONS.length-1)calcResumen();
+  dirty=true;document.getElementById('bannerDraft').classList.add('show');
+}
+function discardDraft(){
+  if(!confirm('¿Borrar todo lo cargado y empezar de nuevo?'))return;
+  dirty=false;lsDel(DRAFT_KEY);location.reload();
+}
+document.addEventListener('input',()=>{dirty=true;scheduleDraft()});
+document.addEventListener('change',()=>{dirty=true;scheduleDraft()});
+window.addEventListener('pagehide',saveDraft);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saveDraft();else if(pendCount())retryNow()});
+window.addEventListener('online',()=>{if(pendCount())retryNow()});
+
+function pendCount(){return (lsGet(PENDING_KEY)||[]).length}
+async function sendPayload(p){
+  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),30000);
+  try{
+    const r=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p),signal:ctl.signal});
+    if(!r.ok)return false;
+    try{const j=await r.json();if(j&&(j.error||j.success===false||j.ok===false||j.status==='error'))return false}catch(e){}
+    return true;
+  }catch(e){return false}finally{clearTimeout(to)}
+}
+async function doFlush(){
+  while(true){
+    const q=lsGet(PENDING_KEY)||[];
+    if(!q.length)return true;
+    if(!(await sendPayload(q[0])))return false;
+    lsSet(PENDING_KEY,(lsGet(PENDING_KEY)||[]).filter(x=>x.id!==q[0].id));
+  }
+}
+function flushPending(){if(!flushing)flushing=doFlush().finally(()=>{flushing=null});return flushing}
+async function retryNow(){
+  const onOk=document.getElementById('successScreen').classList.contains('active');
+  if(onOk)setStatus('sending');
+  const ok=await flushPending();
+  if(onOk)setStatus(ok?'ok':'pending');
+  updatePendBanner();
+}
+function updatePendBanner(){
+  const n=pendCount(),b=document.getElementById('bannerPend');
+  b.classList.toggle('show',n>0);
+  b.innerHTML=n?`<span>⚠️ Tenés ${n} rendición(es) guardada(s) sin enviar.</span><button onclick="retryNow()">Reintentar</button>`:'';
+}
+function setStatus(s){
+  const m={sending:['⏳','Enviando…','No cierres la página hasta que termine.'],
+    ok:['✓','¡Caja enviada!','Tu rendición fue registrada correctamente.<br>El encargado ya puede verla.'],
+    pending:['⚠️','Caja guardada, falta enviar','No se pudo enviar (sin señal o error). Quedó guardada en este teléfono y se envía sola cuando haya conexión. También podés tocar “Reintentar envío”.']}[s];
+  document.getElementById('okIcon').textContent=m[0];
+  document.getElementById('okIcon').style.background=s==='pending'?'linear-gradient(135deg,var(--orange),#d97706)':'';
+  document.getElementById('okTitle').textContent=m[1];
+  document.getElementById('okSub').innerHTML=m[2];
+  document.getElementById('btnRetry').style.display=s==='pending'?'block':'none';
+}
+
+const THEME_COLORS={dark:'#1a1d27',light:'#ffffff',contrast:'#000000'};
+function applyPrefs(){
+  const r=document.documentElement;
+  r.setAttribute('data-theme',prefs.theme);r.style.setProperty('--fs',SIZES[prefs.size]);
+  document.querySelector('meta[name=theme-color]').content=THEME_COLORS[prefs.theme];
+  document.querySelectorAll('[data-theme-opt]').forEach(b=>b.classList.toggle('sel',b.dataset.themeOpt===prefs.theme));
+  document.getElementById('sizeVal').textContent=Math.round(SIZES[prefs.size]*100)+'%';
+}
+function setTheme(t){prefs.theme=t;lsSet(PREFS_KEY,prefs);applyPrefs()}
+function chgSize(d){prefs.size=Math.max(0,Math.min(SIZES.length-1,prefs.size+d));lsSet(PREFS_KEY,prefs);applyPrefs()}
+function toggleCfg(){document.getElementById('cfgPanel').classList.toggle('open')}
+document.addEventListener('click',()=>document.getElementById('cfgPanel')?.classList.remove('open'));
 </script>
 </body>
 </html>
