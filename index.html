@@ -136,6 +136,7 @@
     <div class="cfg-themes"><button class="cfg-opt" data-theme-opt="dark" onclick="setTheme('dark')">🌙 Oscuro</button><button class="cfg-opt" data-theme-opt="light" onclick="setTheme('light')">☀️ Claro</button><button class="cfg-opt" data-theme-opt="contrast" onclick="setTheme('contrast')">◐ Contraste</button></div>
     <div class="cfg-title">Tamaño de letra</div>
     <div class="cfg-size"><button class="cfg-opt" onclick="chgSize(-1)">A−</button><div class="cfg-size-val" id="sizeVal">100%</div><button class="cfg-opt" onclick="chgSize(1)">A+</button></div>
+    <div class="cfg-title" style="margin:14px 0 0">Versión de la app: 2</div>
   </div>
   <div class="progress-bar-wrap">
     <div class="progress-steps" id="progressSteps"></div>
@@ -479,6 +480,7 @@ function nextSection(){
 function prevSection(){if(currentSection>0){currentSection--;updateUI();scheduleDraft();window.scrollTo({top:0,behavior:'smooth'})}}
 
 function submitForm(){
+  if(submitted)return;
   const te=BILLETES.reduce((a,d)=>a+(parseInt(document.getElementById(`b${d}`)?.value)||0)*d,0);
   const tc=getTot('cheques'),tec=getTot('echeqs'),tt=getTot('transferencias'),td=getTot('depositos');
   const via=parseFloat(document.getElementById('viaticos')?.value)||0;
